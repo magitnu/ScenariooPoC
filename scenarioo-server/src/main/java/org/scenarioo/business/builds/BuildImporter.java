@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -72,6 +73,10 @@ public class BuildImporter {
 	
 	private final LastSuccessfulScenariosBuild lastSuccessfulScenarioBuild = new LastSuccessfulScenariosBuild();
 	
+	// TODO pforster: start proto
+	private final BuildComparator buildComparator = new BuildComparator();
+	// TODO pforster: end proto
+
 	public Map<BuildIdentifier, BuildImportSummary> getBuildImportSummaries() {
 		return buildImportSummaries;
 	}
@@ -199,6 +204,28 @@ public class BuildImporter {
 				LOGGER.info("  ADDED ALREADY IMPORTED build: " + summary.getIdentifier().getBranchName() + "/"
 						+ summary.getIdentifier().getBuildName());
 			}
+
+			// TODO pforster: proto start
+			// TODO pforster: get compare builds from configuration
+			List<BuildIdentifier> compareBuildIdentifiers = new LinkedList<BuildIdentifier>();
+			compareBuildIdentifiers.add(new BuildIdentifier("gh-pages", "2016-03-25T15:26:39.017"));
+
+			for (BuildIdentifier compareBuildIdentifier : compareBuildIdentifiers) {
+				LOGGER.info("  START comparison between " + summary.getIdentifier().getBranchName() + "/"
+						+ summary.getIdentifier().getBuildName() + " and " + compareBuildIdentifier.getBranchName()
+						+ "/"
+						+ compareBuildIdentifier.getBuildName());
+
+				buildComparator.compareBuilds(summary.getIdentifier(), compareBuildIdentifier);
+
+				LOGGER.info("  FINISHED comparison between " + summary.getIdentifier().getBranchName() + "/"
+						+ summary.getIdentifier().getBuildName() + " and " + compareBuildIdentifier.getBranchName()
+						+ "/"
+						+ compareBuildIdentifier.getBuildName());
+			}
+
+			// TODO pforster: proto start
+
 			LOGGER.info(" ============= END OF BUILD IMPORT (success) ===========");
 		} catch (Throwable e) {
 			recordBuildImportFinished(summary, BuildImportStatus.FAILED, e.getMessage());

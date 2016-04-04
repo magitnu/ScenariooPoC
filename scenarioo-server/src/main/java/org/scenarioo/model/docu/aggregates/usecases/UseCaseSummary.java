@@ -4,6 +4,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.scenarioo.model.docu.entities.DefaultDiffInfos;
 import org.scenarioo.model.docu.entities.Labels;
 
 /**
@@ -18,6 +19,12 @@ public class UseCaseSummary {
 	private String description;
 	private int numberOfScenarios;
 	private Labels labels;
+
+	// TODO pforster: start proto
+	// TODO pforster shall we really access the jaxb class from the api here?
+	private DefaultDiffInfos diffs;
+
+	// TODO pforster: end proto
 	
 	public String getStatus() {
 		return status;
@@ -55,8 +62,23 @@ public class UseCaseSummary {
 		return labels;
 	}
 
-	public void setLabels(Labels labels) {
+	public void setLabels(final Labels labels) {
 		this.labels = labels;
+	}
+
+	/**
+	 * @return the diffs
+	 */
+	public DefaultDiffInfos getDiffs() {
+		return diffs;
+	}
+
+	/**
+	 * @param diffs
+	 *            the diffs to set
+	 */
+	public void setDiffs(final DefaultDiffInfos diffs) {
+		this.diffs = diffs;
 	}
 
 }

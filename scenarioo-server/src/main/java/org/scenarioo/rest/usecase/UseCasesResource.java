@@ -76,6 +76,7 @@ public class UseCasesResource {
 		summary.setStatus(useCase.getStatus());
 		summary.setNumberOfScenarios(useCaseScenarios.getScenarios().size());
 		summary.setLabels(useCase.getLabels());
+		summary.setDiffs(useCase.getDiffs());
 		return summary;
 	}
 	
